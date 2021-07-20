@@ -5,19 +5,19 @@ repos:
     - id: python-safety-dependencies-check
 
   - repo: 'https://github.com/asottile/reorder_python_imports'
-    rev: v1.8.0
+    rev: v2.5.0
     hooks:
       - id: reorder-python-imports
         name: 'Reorder Python imports'
 
   - repo: https://github.com/ambv/black
-    rev: 21.5b1
+    rev: 21.7b0
     hooks:
     - id: black
       language_version: python3.9
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
     - id: end-of-file-fixer
     - id: trailing-whitespace
@@ -25,7 +25,7 @@ repos:
     - id: requirements-txt-fixer
 
   - repo: https://github.com/sondrelg/pep585-upgrade
-    rev: ''  # Use the sha / tag you want to point at
+    rev: 'ab1595ee0aa8823dcda1f0bd95b2c194fcd5362b'  # Use the sha / tag you want to point at
     hooks:
     - id: upgrade-type-hints
 
