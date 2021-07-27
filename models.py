@@ -22,14 +22,14 @@ class Vacancy(BaseModel):
     id = AutoField(primary_key=True)
     vacancy_id = BigIntegerField(unique=True)
     job_title = CharField()
-    developer_level = CharField(blank=True)
-    town = CharField(blank=True)
+    developer_level = CharField(default="")
+    town = CharField(default="")
     salary_start = IntegerField(default=0, blank=True)
     salary_end = IntegerField(default=0, blank=True)
-    salary_currency = CharField(blank=True)
+    salary_currency = CharField(default="")
     is_fulltime = BooleanField(default=False)
     is_remote = BooleanField(default=False)
-    company_name = CharField(blank=True)
+    company_name = CharField(default="")
     skills = ArrayField(CharField, default=[])
 
     # Times
@@ -38,9 +38,9 @@ class Vacancy(BaseModel):
     updated = DateTimeField(null=True)  # entry.updated_parsed
 
     # SRC data
-    src_title = CharField(blank=True)
-    src_link = CharField(blank=True)
-    src_author = CharField(blank=True)
-    src_published = CharField(blank=True)
-    src_summary = TextField(blank=True)
-    src_updated = CharField(blank=True)
+    src_title = CharField(default="")
+    src_link = CharField(default="")
+    src_author = CharField(default="")
+    src_published = CharField(default="")
+    src_summary = TextField(default="")
+    src_updated = CharField(default="")
