@@ -1,7 +1,7 @@
 {
-  "name": "Node.js Sample",
-  "description": "A barebones Node.js app using Express",
-  "repository": "https://github.com/heroku/node-js-getting-started",
+  "name": "Habr-Carrier Analytics App",
+  "description": "Get by Rss vacancy on habr carrier and store in database",
+  "repository": "https://github.com/saintbyte/carrier-analyzer",
   "logo": "https://node-js-sample.herokuapp.com/node.png",
-  "keywords": ["node", "express", "static"]
+  "keywords": ["habr", "python", "bottle", "peewee"]
 }
