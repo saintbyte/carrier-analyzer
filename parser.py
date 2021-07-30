@@ -1,5 +1,6 @@
 import logging
 import os
+from datetime import datetime
 from typing import Optional
 
 import feedparser
@@ -246,8 +247,8 @@ def main():
             is_remote=get_remote(entry.summary),
             company_name=entry.author,
             skills=get_skills(entry.summary),
-            published=entry.published_parsed,
-            updated=entry.updated_parsed,
+            published=datetime(*entry.published_parsed[:6]),
+            updated=datetime(*entry.updated_parsed[:6]),
             src_title=entry.title,
             src_link=entry.link,
             src_author=entry.author,
@@ -256,20 +257,7 @@ def main():
             src_updated=entry.updated,
         )
         v.save()
-        """
-    #Times
-    created = DateTimeField(default=datetime.datetime.now)
-    published = DateTimeField(null=True)  # entry.published_parsed
-    updated = DateTimeField(null=True)  # entry.updated_parsed
-
-    #SRC data
-    src_title = CharField(blank=True)
-    src_link = CharField(blank=True)
-    src_author = CharField(blank=True)
-    src_published = CharField(blank=True)
-    src_summary = TextField(blank=True)
-    src_updated = CharField(blank=True)
-        """
+    logger.info("End")
 
 
 if __name__ == "__main__":
