@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 import feedparser
+from peewee import IntegrityError
 
 from db import db
 from models import Vacancy
@@ -235,6 +236,7 @@ def main():
             print(f"company_name: {company_name}")
             skills = get_skills(entry.summary)
             print(f"skills: {skills}")
+
         v = Vacancy(
             vacancy_id=get_vacancy_id(entry.link),
             job_title=get_job_title(entry.title, remove_level=True),
@@ -256,7 +258,11 @@ def main():
             src_summary=entry.summary,
             src_updated=entry.updated,
         )
-        v.save()
+        try:
+            v.save()
+        except IntegrityError as e:
+            logger.warning(f"IntegrityError {e}")
+            continue
     logger.info("End")
 
 
