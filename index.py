@@ -4,7 +4,6 @@ import bottle
 from bottle import hook
 from bottle import route
 from bottle import run
-from bottle import template
 
 from db import db
 
@@ -48,7 +47,7 @@ Routes
 
 @route("/")
 def index():
-    return template("<b>Hello , its working</b>!")
+    return "<h1>Its working!</h1>"
 
 
 run(host="0.0.0.0", port=int(os.environ.get("PORT")))
