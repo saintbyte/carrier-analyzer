@@ -1,5 +1,6 @@
 import os
 
+import bottle
 from bottle import hook
 from bottle import route
 from bottle import run
@@ -23,6 +24,7 @@ if all(
         dsn="https://{SENTRY_KEY}@sentry.io/{SENTRY_PROJECT}".format(**os.environ),
         integrations=[BottleIntegration()],
     )
+
 """
 Hook for databases
 """
@@ -44,9 +46,10 @@ Routes
 """
 
 
-@route("/hello/<name>")
+@route("/")
 def index(name: str):
     return template("<b>Hello {{name}}</b>!", name=name)
 
 
 run(host="0.0.0.0", port=int(os.environ.get("PORT")))
+app = bottle.default_app()
