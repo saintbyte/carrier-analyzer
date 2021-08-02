@@ -47,8 +47,8 @@ Routes
 
 
 @route("/")
-def index(name: str):
-    return template("<b>Hello {{name}}</b>!", name=name)
+def index():
+    return template("<b>Hello , its working</b>!")
 
 
 run(host="0.0.0.0", port=int(os.environ.get("PORT")))
