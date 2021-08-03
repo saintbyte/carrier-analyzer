@@ -50,5 +50,6 @@ def index():
     return "<h1>Its working!</h1>"
 
 
-run(host="0.0.0.0", port=int(os.environ.get("PORT")))
+if __name__ == "__main__":
+    run(host="0.0.0.0", port=int(os.environ.get("PORT")))
 app = bottle.default_app()
