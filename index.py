@@ -1,11 +1,14 @@
+import json
 import os
 
 import bottle
 from bottle import hook
+from bottle import response
 from bottle import route
 from bottle import run
 
 from db import db
+from models import Vacancy
 
 """
 Enable Sentry if needed
@@ -43,6 +46,13 @@ def _close_db():
 """
 Routes
 """
+
+
+@route("/count/")
+def count_items():
+    cnt = Vacancy.select().count()
+    response.content_type = "application/json"
+    return json.dumps({"count": cnt})
 
 
 @route("/")
