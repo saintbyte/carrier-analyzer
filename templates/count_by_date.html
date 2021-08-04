@@ -10,16 +10,15 @@
           url: "/count-by-date/",
           dataType: "json",
           async: false
-        }).responseText;
+        }).responseJson;
         var data = new google.visualization.DataTable(jsonData);
         data.addColumn('string', 'date');
         data.addColumn('number', 'count');
         arr = []
-        for(i in Object.keys(data)){
-          arr.push([i, data[i]]);
+        for (const [key, value] of Object.entries(jsonData)){
+          arr.push([key, value]);
         }
-        //data.addRows([
-        //])
+        data.addRows(arr);
         var options = {
           "title":"By date",
           "width":400,
