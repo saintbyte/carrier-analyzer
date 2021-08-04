@@ -16,7 +16,7 @@
         data.addColumn('string', 'date');
         data.addColumn('number', 'count');
         arr = []
-        for ( key if Object.keys(jsonData)){
+        for ( key in Object.keys(jsonData)){
           arr.push([key, jsonData[key]]);
         }
         data.addRows(arr);
