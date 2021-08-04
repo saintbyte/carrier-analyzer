@@ -6,6 +6,8 @@ from bottle import hook
 from bottle import response
 from bottle import route
 from bottle import run
+from bottle import template
+from peewee import fn
 
 from db import db
 from models import Vacancy
@@ -46,6 +48,25 @@ def _close_db():
 """
 Routes
 """
+
+
+@route("/count-by-date-chart/")
+def count_by_days_chart():
+    return template("templates/count_by_date.html")
+
+
+@route("/count-by-date/")
+def count_by_days():
+    query = (
+        Vacancy.select(
+            fn.date_trunc("day", Vacancy.created).alias("date"),
+            fn.COUNT("date").alias("count"),
+        )
+        .group_by(fn.date_trunc("day", Vacancy.created))
+        .order_by(fn.date_trunc("day", Vacancy.created))
+    )
+    response.content_type = "application/json"
+    return json.dumps({str(row.date): row.count for row in query})
 
 
 @route("/count/")
