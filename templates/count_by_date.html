@@ -12,13 +12,21 @@
           async: false
         }).responseText;
         var data = new google.visualization.DataTable(jsonData);
+        data.addColumn('string', 'date');
+        data.addColumn('number', 'count');
+        arr = []
+        for(i in Object.keys(data)){
+          arr.push([i, data[i]]);
+        }
+        //data.addRows([
+        //])
         var options = {
           "title":"By date",
           "width":400,
           "height":300
         };
-        var chart = new google.visualization.PieChart(document.getElementById("chart_div"));
-        chart.draw(data, options);
+        var chart = new google.visualization.BarChart(document.getElementById("chart_div"));
+        chart.draw(arr, options);
       }
     </script>
   </head>
