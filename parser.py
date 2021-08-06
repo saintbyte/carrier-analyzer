@@ -205,38 +205,10 @@ def main():
     logger.info("Start")
     db.connect()
     feed = get_feed(os.environ.get("RSS_URL"))
-
     for entry in get_entries(feed):
         (town, salary_start, salary_end, salary_currency) = get_location_and_salary(
             entry.title
         )
-        if os.environ.get("DEBUG") == "1":
-            print("---------------")
-            print(f"title: {entry.title}")
-            print(f"link: {entry.link}")
-            print(f"autor: {entry.author}")
-            print(f"published: {entry.published}")
-            print(f"summary: {entry.summary}")
-            print(f"updated: {entry.updated}")
-            vacancy_id = get_vacancy_id(entry.link)
-            print(f"vacancy_id: {vacancy_id}")
-            job_title = get_job_title(entry.title, remove_level=True)
-            print(f"job_title: {job_title}")
-            developer_level = get_developer_level(get_job_title(entry.title))
-            print(f"developer_level: {developer_level}")
-            print(f"town: {town}")
-            print(f"salary_start: {salary_start}")
-            print(f"salary_end: {salary_end}")
-            print(f"salary_currency: {salary_currency}")
-            is_fulltime = get_fulltime(entry.summary)
-            is_remote = get_remote(entry.summary)
-            print(f"is_fulltime : {is_fulltime}")
-            print(f"is_remote: {is_remote}")
-            company_name = entry.author
-            print(f"company_name: {company_name}")
-            skills = get_skills(entry.summary)
-            print(f"skills: {skills}")
-
         v = Vacancy(
             vacancy_id=get_vacancy_id(entry.link),
             job_title=get_job_title(entry.title, remove_level=True),
