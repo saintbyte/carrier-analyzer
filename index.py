@@ -68,7 +68,7 @@ Routes
 
 @route("/export-vacancy/")
 def export_vacancy():
-    if request.query.get("access_token") != os.environ("ACCESS_MAGIC_KEY", None):
+    if request.query.get("access_token") != os.environ.get("ACCESS_MAGIC_KEY"):
         raise HTTPError(status=403, body=ACCESS_DENIED_STR)
     response.content_type = "application/json"
     return json.dumps(model_to_dict(Vacancy.select()))
