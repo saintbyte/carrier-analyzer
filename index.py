@@ -70,6 +70,7 @@ Routes
 def export_vacancy():
     if request.query.get("access_token") != os.environ("ACCESS_MAGIC_KEY", None):
         raise HTTPError(status=403, body=ACCESS_DENIED_STR)
+    response.content_type = "application/json"
     return json.dumps(model_to_dict(Vacancy.select()))
 
 
