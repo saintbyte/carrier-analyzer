@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 
@@ -38,6 +39,13 @@ if all(
         integrations=[BottleIntegration()],
     )
 
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (datetime.date, datetime.datetime)):
+            return obj.isoformat()
+
+
 """
 Hook for databases
 """
@@ -71,7 +79,7 @@ def export_vacancy():
     if request.query.get("access_token") != os.environ.get("ACCESS_MAGIC_KEY"):
         raise HTTPError(status=403, body=ACCESS_DENIED_STR)
     response.content_type = "application/json"
-    return json.dumps([model_to_dict(v) for v in Vacancy.select()])
+    return json.dumps([model_to_dict(v) for v in Vacancy.select()], cls=DateTimeEncoder)
 
 
 @route("/count-by-date-chart/")
