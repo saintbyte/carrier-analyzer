@@ -15,12 +15,11 @@ from playhouse.shortcuts import model_to_dict
 
 from db import db
 from models import Vacancy
-
-ACCESS_DENIED_STR: str = "Access Denied"
-CORS_ALL_WILDCARD: str = "*"
-CORS_ALLOWED_HTTP_METHODS: str = "GET, POST, PUT, OPTIONS"
-CORS_ALLOWED_HTTP_HEADERS: str = (
-    "Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token"
+from constants import (
+ACCESS_DENIED_STR,
+CORS_ALL_WILDCARD,
+CORS_ALLOWED_HTTP_METHODS,
+CORS_ALLOWED_HTTP_HEADERS,
 )
 """
 Enable Sentry if needed
