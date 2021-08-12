@@ -13,14 +13,13 @@ from bottle import template
 from peewee import fn
 from playhouse.shortcuts import model_to_dict
 
+from constants import ACCESS_DENIED_STR
+from constants import CORS_ALL_WILDCARD
+from constants import CORS_ALLOWED_HTTP_HEADERS
+from constants import CORS_ALLOWED_HTTP_METHODS
 from db import db
 from models import Vacancy
-from constants import (
-ACCESS_DENIED_STR,
-CORS_ALL_WILDCARD,
-CORS_ALLOWED_HTTP_METHODS,
-CORS_ALLOWED_HTTP_HEADERS,
-)
+
 """
 Enable Sentry if needed
 """

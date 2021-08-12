@@ -22,7 +22,11 @@ def test_first():
 
 def test_get_feed():
     url = "https://ya.ru/"
-    get_feed(url)
+    try:
+        get_feed(url)
+    except Exception:
+        return True
+    pytest.fail("No RSS on yandex how page")
 
 
 def test_get_entries():

@@ -41,7 +41,6 @@ CURRENCY_NAMES_LIST: list[str] = [
     "EURO",
     "USD",
 ]
-
 SENIOR_LEVEL: str = "Senior"
 SENIOR_SHORT_LEVEL: str = "Sr"
 SENIOR_RUS: str = "Ведущий"
@@ -64,4 +63,3 @@ DEVELOPER_LEVELS: list[str] = [
     JUINOR_LEVEL,
     LEAD_LEVEL,
 ]
-
