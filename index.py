@@ -17,6 +17,7 @@ from constants import ACCESS_DENIED_STR
 from constants import CORS_ALL_WILDCARD
 from constants import CORS_ALLOWED_HTTP_HEADERS
 from constants import CORS_ALLOWED_HTTP_METHODS
+from constants import JSON_CONTENT_TYPE
 from db import db
 from models import Vacancy
 
@@ -76,7 +77,7 @@ Routes
 def export_vacancy():
     if request.query.get("access_token") != os.environ.get("ACCESS_MAGIC_KEY"):
         raise HTTPError(status=403, body=ACCESS_DENIED_STR)
-    response.content_type = "application/json"
+    response.content_type = JSON_CONTENT_TYPE
     return json.dumps([model_to_dict(v) for v in Vacancy.select()], cls=DateTimeEncoder)
 
 
@@ -95,14 +96,14 @@ def count_by_days():
         .group_by(fn.date_trunc("day", Vacancy.created))
         .order_by(fn.date_trunc("day", Vacancy.created))
     )
-    response.content_type = "application/json"
+    response.content_type = JSON_CONTENT_TYPE
     return json.dumps({str(row.date): row.count for row in query})
 
 
 @route("/count/")
 def count_items():
     cnt = Vacancy.select().count()
-    response.content_type = "application/json"
+    response.content_type = JSON_CONTENT_TYPE
     return json.dumps({"count": cnt})
 
 

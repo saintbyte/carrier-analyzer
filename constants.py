@@ -7,7 +7,7 @@ CORS_ALLOWED_HTTP_METHODS: str = "GET, POST, PUT, OPTIONS"
 CORS_ALLOWED_HTTP_HEADERS: str = (
     "Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token"
 )
-
+JSON_CONTENT_TYPE: str = "application/json"
 
 """
 Parser HC part
