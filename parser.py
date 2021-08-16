@@ -10,7 +10,7 @@ from db import db
 from models import Vacancy
 
 logger = logging.getLogger(__name__)
-from .constants import (
+from constants import (
     RIGHT_QUOTE_MARKER,
     SPACE,
     COMMA,
