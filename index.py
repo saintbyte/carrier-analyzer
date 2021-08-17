@@ -1,4 +1,3 @@
-import datetime
 import json
 import os
 
@@ -13,11 +12,13 @@ from peewee import fn
 from playhouse.shortcuts import model_to_dict
 
 from constants import ACCESS_DENIED_STR
+from constants import ACCESS_QUERYSTRING_PARAM
 from constants import CORS_ALL_WILDCARD
 from constants import CORS_ALLOWED_HTTP_HEADERS
 from constants import CORS_ALLOWED_HTTP_METHODS
 from constants import JSON_CONTENT_TYPE
 from db import db
+from helpers import DateTimeEncoder
 from models import Vacancy
 
 """
@@ -36,12 +37,6 @@ if all(
         dsn="https://{SENTRY_KEY}@sentry.io/{SENTRY_PROJECT}".format(**os.environ),
         integrations=[BottleIntegration()],
     )
-
-
-class DateTimeEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, (datetime.date, datetime.datetime)):
-            return obj.isoformat()
 
 
 """
@@ -74,7 +69,9 @@ Routes
 
 @route("/export-vacancy/")
 def export_vacancy():
-    if request.query.get("access_token") != os.environ.get("ACCESS_MAGIC_KEY"):
+    if request.query.get(ACCESS_QUERYSTRING_PARAM) != os.environ.get(
+        "ACCESS_MAGIC_KEY"
+    ):
         raise HTTPError(status=403, body=ACCESS_DENIED_STR)
     response.content_type = JSON_CONTENT_TYPE
     return json.dumps([model_to_dict(v) for v in Vacancy.select()], cls=DateTimeEncoder)

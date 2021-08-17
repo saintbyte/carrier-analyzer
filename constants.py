@@ -2,6 +2,7 @@
 Web part
 """
 ACCESS_DENIED_STR: str = "Access Denied"
+ACCESS_QUERYSTRING_PARAM = "access_token"
 CORS_ALL_WILDCARD: str = "*"
 CORS_ALLOWED_HTTP_METHODS: str = "GET, POST, PUT, OPTIONS"
 CORS_ALLOWED_HTTP_HEADERS: str = (
