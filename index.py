@@ -9,7 +9,6 @@ from bottle import request
 from bottle import response
 from bottle import route
 from bottle import run
-from bottle import template
 from peewee import fn
 from playhouse.shortcuts import model_to_dict
 
@@ -79,11 +78,6 @@ def export_vacancy():
         raise HTTPError(status=403, body=ACCESS_DENIED_STR)
     response.content_type = JSON_CONTENT_TYPE
     return json.dumps([model_to_dict(v) for v in Vacancy.select()], cls=DateTimeEncoder)
-
-
-@route("/count-by-date-chart/")
-def count_by_days_chart():
-    return template("templates/count_by_date.html")
 
 
 @route("/count-by-date/")
