@@ -57,7 +57,7 @@ def detect_currency_string(string: str) -> Optional[str]:
 def get_vacancy_id(vacancy_url: str) -> int:
     if vacancy_url.startswith(VACANCY_URL_STARTS):
         return int(vacancy_url.replace(VACANCY_URL_STARTS, ""))
-    raise Exception("cant get vacancy id")
+    raise ValueError("cant get vacancy id from url")
 
 
 def get_job_title(title: str, *, remove_level: bool = False) -> Optional[str]:
