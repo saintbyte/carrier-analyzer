@@ -5,6 +5,6 @@ gunicorn
 peewee==3.14.4
 peewee-migrate
 psycopg2-binary==2.9.1
-sentry-sdk==0.16.2
+sentry-sdk==0.20.3
 sgmllib3k==1.0.0
 urllib3==1.26.6
