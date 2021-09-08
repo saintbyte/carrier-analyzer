@@ -11,6 +11,7 @@ from bottle import run
 from peewee import fn
 from playhouse.shortcuts import model_to_dict
 
+from .redis import redis_connection  # noqa
 from constants import ACCESS_DENIED_STR
 from constants import ACCESS_QUERYSTRING_PARAM
 from constants import CORS_ALL_WILDCARD

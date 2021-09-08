@@ -6,6 +6,7 @@ from typing import Optional
 import feedparser
 from peewee import IntegrityError
 
+from .redis import redis_connection
 from db import db
 from models import Vacancy
 
@@ -26,6 +27,13 @@ from constants import (
     CURRENCY_NAMES_LIST,
     DEVELOPER_LEVELS,
 )
+
+
+def get_exists_vacansies_ids() -> list[int]:
+    redis_result = redis_connection.get("exists_vacansies_ids")
+    if not redis_result:
+        return []
+    return [int(one_item) for one_item in redis_result.split(",")]
 
 
 def get_feed(url: str) -> feedparser.util.FeedParserDict:
