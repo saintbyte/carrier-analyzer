@@ -11,7 +11,6 @@ from bottle import run
 from peewee import fn
 from playhouse.shortcuts import model_to_dict
 
-from .redis import redis_connection  # noqa
 from constants import ACCESS_DENIED_STR
 from constants import ACCESS_QUERYSTRING_PARAM
 from constants import CORS_ALL_WILDCARD
@@ -20,6 +19,7 @@ from constants import CORS_ALLOWED_HTTP_METHODS
 from constants import JSON_CONTENT_TYPE
 from db import db
 from helpers import DateTimeEncoder
+from helpers import get_exists_vacancies_ids
 from models import Vacancy
 
 """
@@ -97,6 +97,12 @@ def count_items():
     cnt = Vacancy.select().count()
     response.content_type = JSON_CONTENT_TYPE
     return json.dumps({"count": cnt})
+
+
+@route("/exists/ids/")
+def get_exists_ids():
+    response.content_type = JSON_CONTENT_TYPE
+    return json.dumps({"count": get_exists_vacancies_ids()})
 
 
 @route("/")

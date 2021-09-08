@@ -6,8 +6,9 @@ from typing import Optional
 import feedparser
 from peewee import IntegrityError
 
-from .redis import redis_connection
 from db import db
+from helpers import get_exists_vacancies_ids
+from helpers import set_exists_vacancies_ids
 from models import Vacancy
 
 logger = logging.getLogger(__name__)
@@ -27,13 +28,6 @@ from constants import (
     CURRENCY_NAMES_LIST,
     DEVELOPER_LEVELS,
 )
-
-
-def get_exists_vacansies_ids() -> list[int]:
-    redis_result = redis_connection.get("exists_vacansies_ids")
-    if not redis_result:
-        return []
-    return [int(one_item) for one_item in redis_result.split(",")]
 
 
 def get_feed(url: str) -> feedparser.util.FeedParserDict:
@@ -176,12 +170,16 @@ def main():
     logger.info("Start")
     db.connect()
     feed = get_feed(os.environ.get("RSS_URL"))
+    exists_ids = get_exists_vacancies_ids()
     for entry in get_entries(feed):
         (town, salary_start, salary_end, salary_currency) = get_location_and_salary(
             entry.title
         )
+        vacancy_id = get_vacancy_id(entry.link)
+        if vacancy_id in exists_ids:
+            continue
         v = Vacancy(
-            vacancy_id=get_vacancy_id(entry.link),
+            vacancy_id=vacancy_id,
             job_title=get_job_title(entry.title, remove_level=True),
             developer_level=get_developer_level(get_job_title(entry.title)),
             town=town,
@@ -206,6 +204,8 @@ def main():
         except IntegrityError as e:
             logger.warning(f"IntegrityError {e}")
             continue
+        exists_ids.append(vacancy_id)
+    set_exists_vacancies_ids(exists_ids)
     logger.info("End")
 
 

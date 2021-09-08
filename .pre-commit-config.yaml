@@ -24,11 +24,6 @@ repos:
     - id: check-merge-conflict
     - id: requirements-txt-fixer
 
-  - repo: https://github.com/sondrelg/pep585-upgrade
-    rev: 'ab1595ee0aa8823dcda1f0bd95b2c194fcd5362b'  # Use the sha / tag you want to point at
-    hooks:
-    - id: upgrade-type-hints
-
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.9.2
     hooks:
