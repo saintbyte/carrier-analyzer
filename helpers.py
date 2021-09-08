@@ -1,6 +1,12 @@
 import datetime
 import json
+import os
 
+from bottle import HTTPError
+from bottle import request
+
+from constants import ACCESS_DENIED_STR
+from constants import ACCESS_QUERYSTRING_PARAM
 from constants import EXISTS_HC_VACANCIES_IDS_KEY
 from redis_db import redis_connection
 
@@ -20,3 +26,10 @@ def get_exists_vacancies_ids():
 
 def set_exists_vacancies_ids(ids):
     redis_connection.set(EXISTS_HC_VACANCIES_IDS_KEY, ",".join(map(str, ids)))
+
+
+def verify_access():
+    if request.query.get(ACCESS_QUERYSTRING_PARAM) != os.environ.get(
+        "ACCESS_MAGIC_KEY"
+    ):
+        raise HTTPError(status=403, body=ACCESS_DENIED_STR)
