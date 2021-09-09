@@ -2,6 +2,6 @@
   "name": "Habr career Analytics App",
   "description": "Get by Rss vacancy on habr career and store in database",
   "repository": "https://github.com/saintbyte/carrier-analyzer",
-  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "logo": "https://github.com/saintbyte/carrier-analyzer/blob/master/docs/icon.png?raw=true",
   "keywords": ["habr", "python", "career", "bottle", "peewee"]
 }
