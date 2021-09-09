@@ -1,4 +1,5 @@
 import datetime
+import functools
 import json
 import os
 
@@ -28,8 +29,13 @@ def set_exists_vacancies_ids(ids):
     redis_connection.set(EXISTS_HC_VACANCIES_IDS_KEY, ",".join(map(str, ids)))
 
 
-def verify_access():
-    if request.query.get(ACCESS_QUERYSTRING_PARAM) != os.environ.get(
-        "ACCESS_MAGIC_KEY"
-    ):
-        raise HTTPError(status=403, body=ACCESS_DENIED_STR)
+def verify_access_by_magic_key(func):
+    @functools.wraps(func)
+    def wrapper_decorator(*args, **kwargs):
+        if request.query.get(ACCESS_QUERYSTRING_PARAM) != os.environ.get(
+            "ACCESS_MAGIC_KEY"
+        ):
+            raise HTTPError(status=403, body=ACCESS_DENIED_STR)
+        return func(*args, **kwargs)
+
+    return wrapper_decorator

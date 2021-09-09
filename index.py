@@ -22,7 +22,7 @@ from db import db
 from helpers import DateTimeEncoder
 from helpers import get_exists_vacancies_ids
 from helpers import set_exists_vacancies_ids
-from helpers import verify_access
+from helpers import verify_access_by_magic_key
 from models import Vacancy
 
 """
@@ -72,8 +72,8 @@ Routes
 
 
 @route("/export-vacancy/")
+@verify_access_by_magic_key
 def export_vacancy():
-    verify_access()
     response.content_type = JSON_CONTENT_TYPE
     return json.dumps([model_to_dict(v) for v in Vacancy.select()], cls=DateTimeEncoder)
 
@@ -106,8 +106,8 @@ def get_exists_ids():
 
 
 @post("/exists/ids/")
+@verify_access_by_magic_key
 def set_exists_ids():
-    verify_access()
     src_ids = request.forms.get("ids")
     response.content_type = JSON_CONTENT_TYPE
     if not src_ids:
