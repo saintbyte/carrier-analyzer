@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Web part
 """
@@ -64,3 +66,6 @@ DEVELOPER_LEVELS: list[str] = [
     JUINOR_LEVEL,
     LEAD_LEVEL,
 ]
+
+HABR_CAREER = "HC"
+EXISTS_HC_VACANCIES_IDS_KEY = "exists_vacancies_hc_ids"

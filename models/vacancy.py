@@ -31,13 +31,9 @@ class Vacancy(BaseModel):
     is_remote = BooleanField(default=False, null=True)
     company_name = CharField(default="", null=True)
     skills = ArrayField(CharField, default=[], null=True)
-
-    # Times
     created = DateTimeField(default=datetime.datetime.now)
-    published = DateTimeField(null=True)  # entry.published_parsed
-    updated = DateTimeField(null=True)  # entry.updated_parsed
-
-    # SRC data
+    published = DateTimeField(null=True)
+    updated = DateTimeField(null=True)
     src_title = CharField(default="")
     src_link = CharField(default="")
     src_author = CharField(default="")

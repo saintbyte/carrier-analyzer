@@ -25,9 +25,10 @@ repos:
     - id: requirements-txt-fixer
 
   - repo: https://github.com/sondrelg/pep585-upgrade
-    rev: 'ab1595ee0aa8823dcda1f0bd95b2c194fcd5362b'  # Use the sha / tag you want to point at
+    rev: ''  # Use the sha / tag you want to point at
     hooks:
     - id: upgrade-type-hints
+      args: [ '--futures=true' ]
 
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.9.2

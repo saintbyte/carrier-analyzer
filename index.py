@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 import json
 import os
 
 import bottle
+from bottle import get
 from bottle import hook
-from bottle import HTTPError
+from bottle import post
 from bottle import request
 from bottle import response
 from bottle import route
@@ -11,14 +14,15 @@ from bottle import run
 from peewee import fn
 from playhouse.shortcuts import model_to_dict
 
-from constants import ACCESS_DENIED_STR
-from constants import ACCESS_QUERYSTRING_PARAM
 from constants import CORS_ALL_WILDCARD
 from constants import CORS_ALLOWED_HTTP_HEADERS
 from constants import CORS_ALLOWED_HTTP_METHODS
 from constants import JSON_CONTENT_TYPE
 from db import db
 from helpers import DateTimeEncoder
+from helpers import get_exists_vacancies_ids
+from helpers import set_exists_vacancies_ids
+from helpers import verify_access_by_magic_key
 from models import Vacancy
 
 """
@@ -68,11 +72,8 @@ Routes
 
 
 @route("/export-vacancy/")
+@verify_access_by_magic_key
 def export_vacancy():
-    if request.query.get(ACCESS_QUERYSTRING_PARAM) != os.environ.get(
-        "ACCESS_MAGIC_KEY"
-    ):
-        raise HTTPError(status=403, body=ACCESS_DENIED_STR)
     response.content_type = JSON_CONTENT_TYPE
     return json.dumps([model_to_dict(v) for v in Vacancy.select()], cls=DateTimeEncoder)
 
@@ -96,6 +97,29 @@ def count_items():
     cnt = Vacancy.select().count()
     response.content_type = JSON_CONTENT_TYPE
     return json.dumps({"count": cnt})
+
+
+@get("/exists/ids/")
+def get_exists_ids():
+    response.content_type = JSON_CONTENT_TYPE
+    return json.dumps({"count": get_exists_vacancies_ids()})
+
+
+@post("/exists/ids/")
+@verify_access_by_magic_key
+def set_exists_ids():
+    src_ids = request.forms.get("ids")
+    response.content_type = JSON_CONTENT_TYPE
+    if not src_ids:
+        return json.dumps({"result": False})
+    if "," not in src_ids:
+        ids = [
+            src_ids,
+        ]
+    else:
+        ids = src_ids.split(",")
+    set_exists_vacancies_ids(ids)
+    return json.dumps({"result": True})
 
 
 @route("/")
