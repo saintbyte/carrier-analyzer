@@ -6,12 +6,11 @@ from datetime import datetime
 from typing import Optional
 
 import feedparser
-from peewee import IntegrityError
-
 from db import db
 from helpers import get_exists_vacancies_ids
 from helpers import set_exists_vacancies_ids
 from models import Vacancy
+from peewee import IntegrityError
 
 logger = logging.getLogger(__name__)
 from constants import (

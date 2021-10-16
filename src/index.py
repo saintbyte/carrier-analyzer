@@ -11,9 +11,6 @@ from bottle import request
 from bottle import response
 from bottle import route
 from bottle import run
-from peewee import fn
-from playhouse.shortcuts import model_to_dict
-
 from constants import CORS_ALL_WILDCARD
 from constants import CORS_ALLOWED_HTTP_HEADERS
 from constants import CORS_ALLOWED_HTTP_METHODS
@@ -24,6 +21,8 @@ from helpers import get_exists_vacancies_ids
 from helpers import set_exists_vacancies_ids
 from helpers import verify_access_by_magic_key
 from models import Vacancy
+from peewee import fn
+from playhouse.shortcuts import model_to_dict
 
 """
 Enable Sentry if needed

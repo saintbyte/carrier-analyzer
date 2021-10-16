@@ -1,5 +1,6 @@
 import datetime
 
+from db import db
 from peewee import AutoField
 from peewee import BigIntegerField
 from peewee import BooleanField
@@ -9,8 +10,6 @@ from peewee import IntegerField
 from peewee import Model
 from peewee import TextField
 from playhouse.postgres_ext import ArrayField
-
-from db import db
 
 
 class BaseModel(Model):

@@ -5,7 +5,6 @@ import os
 
 from bottle import HTTPError
 from bottle import request
-
 from constants import ACCESS_DENIED_STR
 from constants import ACCESS_QUERYSTRING_PARAM
 from constants import EXISTS_HC_VACANCIES_IDS_KEY
