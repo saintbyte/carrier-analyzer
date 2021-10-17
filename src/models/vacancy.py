@@ -1,20 +1,19 @@
+from __future__ import annotations
+
 import datetime
 
-from db import db
+from constants import EXISTS_HC_VACANCIES_IDS_KEY
 from peewee import AutoField
 from peewee import BigIntegerField
 from peewee import BooleanField
 from peewee import CharField
 from peewee import DateTimeField
 from peewee import IntegerField
-from peewee import Model
 from peewee import TextField
 from playhouse.postgres_ext import ArrayField
+from redis_db import redis_connection
 
-
-class BaseModel(Model):
-    class Meta:
-        database = db
+from .base import BaseModel
 
 
 class Vacancy(BaseModel):
@@ -39,3 +38,19 @@ class Vacancy(BaseModel):
     src_published = CharField(default="")
     src_summary = TextField(default="")
     src_updated = CharField(default="")
+
+    @staticmethod
+    def get_exists_vacancies_ids() -> list[int]:
+        redis_result = redis_connection.get(EXISTS_HC_VACANCIES_IDS_KEY)
+        if not redis_result:
+            return []
+        redis_result = redis_result.decode("utf-8")
+        if "," not in redis_result:
+            return [
+                int(redis_result),
+            ]
+        return [int(one_item) for one_item in redis_result.split(",")]
+
+    @staticmethod
+    def set_exists_vacancies_ids(ids: list):
+        redis_connection.set(EXISTS_HC_VACANCIES_IDS_KEY, ",".join(map(str, ids)))

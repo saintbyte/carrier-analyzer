@@ -17,8 +17,6 @@ from constants import CORS_ALLOWED_HTTP_METHODS
 from constants import JSON_CONTENT_TYPE
 from db import db
 from helpers import DateTimeEncoder
-from helpers import get_exists_vacancies_ids
-from helpers import set_exists_vacancies_ids
 from helpers import verify_access_by_magic_key
 from models import Vacancy
 from peewee import fn
@@ -79,13 +77,14 @@ def export_vacancy():
 
 @route("/count-by-date/")
 def count_by_days():
+    created_date_trunc_day = fn.date_trunc("day", Vacancy.created)
     query = (
         Vacancy.select(
-            fn.date_trunc("day", Vacancy.created).alias("date"),
+            created_date_trunc_day.alias("date"),
             fn.COUNT("date").alias("count"),
         )
-        .group_by(fn.date_trunc("day", Vacancy.created))
-        .order_by(fn.date_trunc("day", Vacancy.created))
+        .group_by(created_date_trunc_day)
+        .order_by(created_date_trunc_day)
     )
     response.content_type = JSON_CONTENT_TYPE
     return json.dumps({str(row.date): row.count for row in query})
@@ -95,13 +94,13 @@ def count_by_days():
 def count_items():
     cnt = Vacancy.select().count()
     response.content_type = JSON_CONTENT_TYPE
-    return json.dumps({"count": cnt})
+    return json.dumps({"result": cnt})
 
 
 @get("/exists/ids/")
 def get_exists_ids():
     response.content_type = JSON_CONTENT_TYPE
-    return json.dumps({"count": get_exists_vacancies_ids()})
+    return json.dumps({"result": Vacancy.get_exists_vacancies_ids()})
 
 
 @post("/exists/ids/")
@@ -117,7 +116,7 @@ def set_exists_ids():
         ]
     else:
         ids = src_ids.split(",")
-    set_exists_vacancies_ids(ids)
+    Vacancy.set_exists_vacancies_ids(ids)
     return json.dumps({"result": True})
 
 

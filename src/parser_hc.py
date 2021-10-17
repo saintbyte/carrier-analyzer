@@ -7,8 +7,6 @@ from typing import Optional
 
 import feedparser
 from db import db
-from helpers import get_exists_vacancies_ids
-from helpers import set_exists_vacancies_ids
 from models import Vacancy
 from peewee import IntegrityError
 
@@ -141,9 +139,7 @@ def get_location_and_salary(
 
 
 def get_fulltime(text: str) -> bool:
-    if FULLTIME_MARKER in text:
-        return True
-    return False
+    return FULLTIME_MARKER in text
 
 
 def get_remote(text: str) -> bool:
@@ -168,10 +164,10 @@ def get_skills(text: str) -> list:
 
 
 def main():
-    logger.info("Start")
+    logger.info("Start parsing from Habr Career")
     db.connect()
     feed = get_feed(os.environ.get("RSS_URL"))
-    exists_ids = get_exists_vacancies_ids()
+    exists_ids = Vacancy.get_exists_vacancies_ids()
     for entry in get_entries(feed):
         (town, salary_start, salary_end, salary_currency) = get_location_and_salary(
             entry.title
@@ -206,7 +202,7 @@ def main():
             logger.warning(f"IntegrityError {e}")
             continue
         exists_ids.append(vacancy_id)
-    set_exists_vacancies_ids(exists_ids)
+    Vacancy.set_exists_vacancies_ids(exists_ids)
     logger.info("End")
 
 
