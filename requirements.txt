@@ -2,7 +2,7 @@ bottle==0.12.19
 certifi==2021.10.8
 feedparser==6.0.8
 gunicorn
-peewee==3.14.4
+peewee==3.14.6
 peewee-migrate
 psycopg2-binary==2.9.1
 redis==3.5.3
