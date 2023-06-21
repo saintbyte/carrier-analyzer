@@ -1,6 +1,6 @@
 bottle==0.12.20
 certifi==2021.10.8
-feedparser==6.0.8
+feedparser==6.0.10
 gunicorn
 peewee==3.16.2
 peewee-migrate
