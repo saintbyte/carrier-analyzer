@@ -4,7 +4,7 @@ feedparser==6.0.10
 gunicorn
 peewee==3.16.2
 peewee-migrate
-psycopg2-binary==2.9.6
+psycopg2-binary==2.9.10
 redis==3.5.3
 sentry-sdk==1.4.3
 sgmllib3k==1.0.0
